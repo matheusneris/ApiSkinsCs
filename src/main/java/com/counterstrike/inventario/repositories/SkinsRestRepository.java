@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @FeignClient(value = "skinsCsRest", url = "${skins.url}")
-public interface SkinsRepository {
+public interface SkinsRestRepository {
 
     @GetMapping("/skins.json")
     List<SkinsSearch> search();
