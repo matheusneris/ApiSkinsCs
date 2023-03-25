@@ -19,7 +19,7 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @PostMapping
+    @PostMapping("/criar")
     public ResponseEntity<Object> criarUsuario(@RequestBody @Valid UsuarioDto usuarioDto){
         if(usuarioService.usuarioExistByEmail(usuarioDto.getEmail())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Um usuário já existente com este email.");
@@ -27,7 +27,7 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.salvarUsuario(usuarioDto));
     }
 
-    @GetMapping
+    @GetMapping("/listartodos")
     public ResponseEntity<Object> listarTodosUsuarios(){
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.listarTodosUsuarios());
     }
@@ -41,7 +41,7 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não existe usuário com este id.");
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/excluir/{id}")
     public ResponseEntity<Object> deletarUsuarioPorId(@PathVariable Long id){
         usuarioService.excluirUsuarioPorId(id);
         return ResponseEntity.status(HttpStatus.OK).body("Usuário excluído.");
