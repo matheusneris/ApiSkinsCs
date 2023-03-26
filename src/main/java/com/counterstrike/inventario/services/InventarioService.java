@@ -17,8 +17,8 @@ public class InventarioService{
         this.inventarioRepository = inventarioRepository;
     }
 
-    public Optional<InventarioModel> buscarInventario(Long id){
+    /*public Optional<InventarioModel> buscarInventario(Long id){
         inventarioRepository.findById()
-    }
+    }*/
 
 }

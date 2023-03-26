@@ -3,8 +3,6 @@ package com.counterstrike.inventario.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
@@ -17,7 +15,7 @@ public class UsuarioModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(nullable = false)
-    private String nome;
+    private String nomeUsuario;
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)

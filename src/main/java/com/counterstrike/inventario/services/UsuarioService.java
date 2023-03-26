@@ -3,6 +3,7 @@ package com.counterstrike.inventario.services;
 import com.counterstrike.inventario.dtos.UsuarioDto;
 import com.counterstrike.inventario.entities.UsuarioModel;
 import com.counterstrike.inventario.repositories.UsuarioRepository;
+import com.counterstrike.inventario.requests.UsuarioRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +20,11 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public UsuarioDto salvarUsuario(UsuarioDto usuarioDto){
+    public UsuarioDto salvarUsuario(UsuarioRequest usuarioRequest){
         UsuarioModel usuarioModel = new UsuarioModel();
-        BeanUtils.copyProperties(usuarioDto, usuarioModel);
+        BeanUtils.copyProperties(usuarioRequest, usuarioModel);
         usuarioRepository.save(usuarioModel);
+        UsuarioDto usuarioDto = new UsuarioDto(usuarioModel);
         return usuarioDto;
     }
 
