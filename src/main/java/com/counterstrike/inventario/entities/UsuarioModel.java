@@ -1,7 +1,10 @@
 package com.counterstrike.inventario.entities;
 
+import com.counterstrike.inventario.dtos.UsuarioDto;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,5 +23,11 @@ public class UsuarioModel {
     private String email;
     @Column(nullable = false)
     private String senha;
+    @OneToMany
+    private List<SkinModel> inventarioSkins;
+
+    public void adicionarSkinAoInventario(SkinModel skinModel){
+        this.inventarioSkins.add(skinModel);
+    }
 
 }

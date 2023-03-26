@@ -1,6 +1,8 @@
 package com.counterstrike.inventario.services;
 
+import com.counterstrike.inventario.dtos.SkinDto;
 import com.counterstrike.inventario.dtos.UsuarioDto;
+import com.counterstrike.inventario.entities.SkinModel;
 import com.counterstrike.inventario.entities.UsuarioModel;
 import com.counterstrike.inventario.repositories.UsuarioRepository;
 import com.counterstrike.inventario.requests.UsuarioRequest;
@@ -12,12 +14,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioService {
+public class UsuarioService extends Throwable {
 
     private UsuarioRepository usuarioRepository;
+    private SkinService skinService;
 
-    public UsuarioService(UsuarioRepository usuarioRepository){
+    public UsuarioService(UsuarioRepository usuarioRepository, SkinService skinService){
         this.usuarioRepository = usuarioRepository;
+        this.skinService = skinService;
     }
 
     public UsuarioDto salvarUsuario(UsuarioRequest usuarioRequest){
@@ -42,11 +46,25 @@ public class UsuarioService {
     public Optional<UsuarioDto> buscarUsuarioPorId(Long id){
         Optional<UsuarioModel> usuarioModel = usuarioRepository.findById(id);
         if(usuarioModel.isPresent()){
-            UsuarioDto usuarioDto = new UsuarioDto();
-            BeanUtils.copyProperties(usuarioModel, usuarioDto);
-            return Optional.of(usuarioDto);
+            return Optional.of(new UsuarioDto(usuarioModel.get()));
         }
         return null;
+    }
+
+    public UsuarioDto salvarSkinNoInventario(Long id, String idSkin){
+
+        UsuarioModel usuarioModel = usuarioRepository.findById(id).get();
+        Optional<SkinModel> skinModel = skinService.buscarSkinPorId(idSkin);
+        System.out.println(skinModel);
+        if(skinModel.isEmpty()){
+            throw new RuntimeException("skin não encontrada");
+        }
+//        skinModel.get().setUsuarioModel(usuarioModel);
+        //skinService.salvarSkin(new SkinDto(skinModel.get()));
+        //SkinModel skinModel1 = skinService.buscarSkinPorId(idSkin).get();
+        usuarioModel.adicionarSkinAoInventario(skinModel.get());
+        UsuarioModel usuarioModel1 = usuarioRepository.save(usuarioModel);
+        return new UsuarioDto(usuarioModel1);
     }
 
     public void excluirUsuarioPorId(Long id){

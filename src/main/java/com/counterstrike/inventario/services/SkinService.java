@@ -25,12 +25,12 @@ public class SkinService {
         skinRepository.save(skinModel);
     }
 
-    public SkinDto buscarSkinPorId(String id){
+    public Optional<SkinModel> buscarSkinPorId(String id){
         Optional <SkinModel> skinModel = skinRepository.findById(id);
         if (skinModel.isPresent()){
-            SkinDto skinDto = new SkinDto();
-            BeanUtils.copyProperties(skinModel, skinDto);
-            return skinDto;
+            //SkinDto skinDto = new SkinDto();
+           // BeanUtils.copyProperties(skinModel, skinDto);
+            return skinModel;
         }
         return null;
     }

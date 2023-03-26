@@ -2,17 +2,17 @@ package com.counterstrike.inventario.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-
+/*
 @Entity
 @Table(name = "tb_inventario")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString*/
 public class InventarioModel {
 
-    @Id
+   /* @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -27,6 +27,6 @@ public class InventarioModel {
     public InventarioModel(UsuarioModel usuarioModel, SkinModel skinModel){
         this.skinModel = skinModel;
         this.usuarioModel = usuarioModel;
-    }
+    }*/
 
 }
