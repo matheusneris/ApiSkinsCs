@@ -1,6 +1,7 @@
 package com.counterstrike.inventario.controllers;
 
 import com.counterstrike.inventario.dtos.UsuarioDto;
+import com.counterstrike.inventario.requests.UsuarioRequest;
 import com.counterstrike.inventario.services.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +21,11 @@ public class UsuarioController {
     }
 
     @PostMapping("/criar")
-    public ResponseEntity<Object> criarUsuario(@RequestBody @Valid UsuarioDto usuarioDto){
-        if(usuarioService.usuarioExistByEmail(usuarioDto.getEmail())){
+    public ResponseEntity<Object> criarUsuario(@RequestBody @Valid UsuarioRequest usuarioRequest){
+        if(usuarioService.usuarioExistByEmail(usuarioRequest.getEmail())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Um usuário já existente com este email.");
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.salvarUsuario(usuarioDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.salvarUsuario(usuarioRequest));
     }
 
     @GetMapping("/listartodos")

@@ -1,20 +1,27 @@
 package com.counterstrike.inventario.dtos;
 
 
+import com.counterstrike.inventario.entities.SkinModel;
+import com.counterstrike.inventario.entities.UsuarioModel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UsuarioDto {
 
-    @NotBlank
-    private String nome;
-    @NotBlank
+    private String nomeUsuario;
     private String email;
-    @NotBlank
-    private String senha;
+
+    public UsuarioDto(UsuarioModel usuarioModel){
+        this.nomeUsuario = usuarioModel.getNomeUsuario();
+        this.email = usuarioModel.getEmail();
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.counterstrike.inventario.entities;
 
+import com.counterstrike.inventario.dtos.UsuarioDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,10 +18,14 @@ public class UsuarioModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(nullable = false)
-    private String nome;
+    private String nomeUsuario;
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
     private String senha;
+
+    //public void adicionarSkinAoInventario(SkinModel skinModel){
+//        this.inventarioSkins.add(skinModel);
+//    }
 
 }

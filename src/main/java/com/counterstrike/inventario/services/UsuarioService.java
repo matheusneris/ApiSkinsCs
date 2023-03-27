@@ -1,8 +1,10 @@
 package com.counterstrike.inventario.services;
 
 import com.counterstrike.inventario.dtos.UsuarioDto;
+import com.counterstrike.inventario.entities.SkinModel;
 import com.counterstrike.inventario.entities.UsuarioModel;
 import com.counterstrike.inventario.repositories.UsuarioRepository;
+import com.counterstrike.inventario.requests.UsuarioRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -11,18 +13,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioService {
+public class UsuarioService extends Throwable {
 
     private UsuarioRepository usuarioRepository;
+    private SkinService skinService;
 
-    public UsuarioService(UsuarioRepository usuarioRepository){
+    public UsuarioService(UsuarioRepository usuarioRepository, SkinService skinService){
         this.usuarioRepository = usuarioRepository;
+        this.skinService = skinService;
     }
 
-    public UsuarioDto salvarUsuario(UsuarioDto usuarioDto){
+    public UsuarioDto salvarUsuario(UsuarioRequest usuarioRequest){
         UsuarioModel usuarioModel = new UsuarioModel();
-        BeanUtils.copyProperties(usuarioDto, usuarioModel);
+        BeanUtils.copyProperties(usuarioRequest, usuarioModel);
         usuarioRepository.save(usuarioModel);
+        UsuarioDto usuarioDto = new UsuarioDto(usuarioModel);
         return usuarioDto;
     }
 
@@ -40,12 +45,31 @@ public class UsuarioService {
     public Optional<UsuarioDto> buscarUsuarioPorId(Long id){
         Optional<UsuarioModel> usuarioModel = usuarioRepository.findById(id);
         if(usuarioModel.isPresent()){
-            UsuarioDto usuarioDto = new UsuarioDto();
-            BeanUtils.copyProperties(usuarioModel, usuarioDto);
-            return Optional.of(usuarioDto);
+            return Optional.of(new UsuarioDto(usuarioModel.get()));
         }
         return null;
     }
+
+    public UsuarioModel getUsuarioModel(Long id){
+        Optional<UsuarioModel> usuarioModel = usuarioRepository.findById(id);
+        if (usuarioModel.isEmpty()){
+            return null;
+        }
+        return usuarioModel.get();
+    }
+
+ /*   public UsuarioDto salvarSkinNoInventario(Long id, String idSkin){
+
+        UsuarioModel usuarioModel = usuarioRepository.findById(id).get();
+        Optional<SkinModel> skinModel = skinService.buscarSkinPorId(idSkin);
+        System.out.println(skinModel);
+        if(skinModel.isEmpty()){
+            throw new RuntimeException("skin não encontrada");
+        }
+        usuarioModel.adicionarSkinAoInventario(skinModel.get());
+        UsuarioModel usuarioModel1 = usuarioRepository.save(usuarioModel);
+        return new UsuarioDto(usuarioModel1);
+    }*/
 
     public void excluirUsuarioPorId(Long id){
         usuarioRepository.deleteById(id);

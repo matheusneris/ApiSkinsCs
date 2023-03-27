@@ -3,9 +3,8 @@ package com.counterstrike.inventario.services;
 import com.counterstrike.inventario.dtos.InventarioDto;
 import com.counterstrike.inventario.entities.InventarioModel;
 import com.counterstrike.inventario.repositories.InventarioRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,8 +16,17 @@ public class InventarioService{
         this.inventarioRepository = inventarioRepository;
     }
 
-    public Optional<InventarioModel> buscarInventario(Long id){
-        inventarioRepository.findById()
+    public void salvarSkinNoInventario(InventarioDto inventarioDto){
+        InventarioModel inventarioModel = new InventarioModel(inventarioDto.getUsuarioModel(), inventarioDto.getSkinModel());
+        inventarioRepository.save(inventarioModel);
+    }
+
+    public Optional<InventarioDto> findByUsuarioModelIdAndSkinModelId(Long idUsuario, String idSkin){
+        return inventarioRepository.findByUsuarioModelIdAndSkinModelId(idUsuario, idSkin);
+    }
+
+    public List<InventarioModel> buscarInventarioUsuario(Long id){
+        return inventarioRepository.findByUsuarioModelId(id);
     }
 
 }
