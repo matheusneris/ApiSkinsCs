@@ -23,11 +23,9 @@ public class UsuarioModel {
     private String email;
     @Column(nullable = false)
     private String senha;
-    @OneToMany
-    private List<SkinModel> inventarioSkins;
 
-    public void adicionarSkinAoInventario(SkinModel skinModel){
-        this.inventarioSkins.add(skinModel);
-    }
+    //public void adicionarSkinAoInventario(SkinModel skinModel){
+//        this.inventarioSkins.add(skinModel);
+//    }
 
 }

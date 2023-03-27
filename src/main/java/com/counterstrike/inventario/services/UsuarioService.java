@@ -1,6 +1,5 @@
 package com.counterstrike.inventario.services;
 
-import com.counterstrike.inventario.dtos.SkinDto;
 import com.counterstrike.inventario.dtos.UsuarioDto;
 import com.counterstrike.inventario.entities.SkinModel;
 import com.counterstrike.inventario.entities.UsuarioModel;
@@ -51,7 +50,15 @@ public class UsuarioService extends Throwable {
         return null;
     }
 
-    public UsuarioDto salvarSkinNoInventario(Long id, String idSkin){
+    public UsuarioModel getUsuarioModel(Long id){
+        Optional<UsuarioModel> usuarioModel = usuarioRepository.findById(id);
+        if (usuarioModel.isEmpty()){
+            return null;
+        }
+        return usuarioModel.get();
+    }
+
+ /*   public UsuarioDto salvarSkinNoInventario(Long id, String idSkin){
 
         UsuarioModel usuarioModel = usuarioRepository.findById(id).get();
         Optional<SkinModel> skinModel = skinService.buscarSkinPorId(idSkin);
@@ -59,13 +66,10 @@ public class UsuarioService extends Throwable {
         if(skinModel.isEmpty()){
             throw new RuntimeException("skin não encontrada");
         }
-//        skinModel.get().setUsuarioModel(usuarioModel);
-        //skinService.salvarSkin(new SkinDto(skinModel.get()));
-        //SkinModel skinModel1 = skinService.buscarSkinPorId(idSkin).get();
         usuarioModel.adicionarSkinAoInventario(skinModel.get());
         UsuarioModel usuarioModel1 = usuarioRepository.save(usuarioModel);
         return new UsuarioDto(usuarioModel1);
-    }
+    }*/
 
     public void excluirUsuarioPorId(Long id){
         usuarioRepository.deleteById(id);

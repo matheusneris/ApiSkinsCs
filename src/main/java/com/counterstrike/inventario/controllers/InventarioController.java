@@ -1,6 +1,9 @@
 package com.counterstrike.inventario.controllers;
 
+import com.counterstrike.inventario.dtos.InventarioDto;
+import com.counterstrike.inventario.dtos.SkinDto;
 import com.counterstrike.inventario.dtos.UsuarioDto;
+import com.counterstrike.inventario.entities.SkinModel;
 import com.counterstrike.inventario.entities.UsuarioModel;
 import com.counterstrike.inventario.requests.InventarioRequest;
 import com.counterstrike.inventario.services.InventarioService;
@@ -19,31 +22,39 @@ public class InventarioController {
 
     private UsuarioService usuarioService;
     private SkinService skinService;
+    private InventarioService inventarioService;
 
-    public InventarioController(UsuarioService usuarioService, SkinService skinService){
+    public InventarioController(UsuarioService usuarioService, SkinService skinService, InventarioService inventarioService){
         this.usuarioService = usuarioService;
         this.skinService = skinService;
+        this.inventarioService = inventarioService;
     }
 
     @PostMapping("/salvar/{id}")
     private ResponseEntity<Object> salvarSkinsInventario(@RequestBody InventarioRequest inventarioRequest, @PathVariable Long id){
         Optional<UsuarioDto> usuarioDto = usuarioService.buscarUsuarioPorId(id);
         if(usuarioDto.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não existe usuário com este ID.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario não encontrado.");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.salvarSkinNoInventario(id, inventarioRequest.getIdSkin()));
+
+        Optional<SkinModel> skinModel = skinService.buscarSkinPorId(inventarioRequest.getIdSkin());
+        if(skinModel.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Skin não encontrada.");
+        }
+
+        Optional<InventarioDto> inventarioDtoOptional = inventarioService.findByUsuarioModelIdAndSkinModelId(id, skinModel.get().getId());
+        if(inventarioDtoOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Usuário já possui a skin no inventário.");
+        }
+
+        InventarioDto inventarioDto = new InventarioDto(getUsuarioModel(id) , skinModel.get());
+        inventarioService.salvarSkinNoInventario(inventarioDto);
+        return ResponseEntity.status(HttpStatus.OK).body("Skin adicionada ao inventário");
     }
 
-
-   /* private InventarioService inventarioService;
-    private UsuarioService usuarioService;
-
-    public InventarioController(UsuarioService usuarioService, InventarioService inventarioService){
-        this.usuarioService = usuarioService;
-        this.inventarioService = inventarioService;
+    private UsuarioModel getUsuarioModel(Long id){
+        return usuarioService.getUsuarioModel(id);
     }
-
-    @PostMapping("/criar")
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> buscarInventario(@PathVariable Long id){
@@ -51,9 +62,7 @@ public class InventarioController {
         if(usuarioDto.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não cadastrado.");
         }
-        //inventarioService.
-        return null;
-    }*/
-
+        return ResponseEntity.status(HttpStatus.OK).body(inventarioService.buscarInventarioUsuario(id));
+    }
 
 }

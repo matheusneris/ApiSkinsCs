@@ -18,12 +18,10 @@ public class UsuarioDto {
 
     private String nomeUsuario;
     private String email;
-    private List<SkinModel> inventarioSkins;
 
     public UsuarioDto(UsuarioModel usuarioModel){
         this.nomeUsuario = usuarioModel.getNomeUsuario();
         this.email = usuarioModel.getEmail();
-        this.inventarioSkins = usuarioModel.getInventarioSkins();
     }
 
 }
