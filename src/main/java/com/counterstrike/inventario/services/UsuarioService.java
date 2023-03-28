@@ -33,11 +33,9 @@ public class UsuarioService extends Throwable {
 
     public Optional<List<UsuarioDto>> listarTodosUsuarios(){
         List<UsuarioModel> usuariosModels = usuarioRepository.findAll();
-        UsuarioDto usuarioDto = new UsuarioDto();
         List<UsuarioDto> usuariosDtos = new ArrayList<>();
         for (UsuarioModel usuario: usuariosModels) {
-            BeanUtils.copyProperties(usuario, usuarioDto);
-            usuariosDtos.add(usuarioDto);
+            usuariosDtos.add(new UsuarioDto(usuario));
         }
         return Optional.of(usuariosDtos);
     }
