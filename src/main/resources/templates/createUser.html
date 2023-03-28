@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+  <link rel="stylesheet" href="/static/stylesheet.css">
+
+  <style>
+    .mensagem {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+
+      <form th:action="@{usuario}" method="post">
+
+        <div class="row mb-3">
+          <label class="col-sm-1 col-form-label">Usuário:</label>
+          <div class="col-sm-3">
+            <input class="form-control" type="text" name="nomeUsuario" >
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="col-sm-1 col-form-label">Email:</label>
+          <div class="col-sm-3">
+            <input class="form-control" type="email" name="email">
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="col-sm-1 col-form-label">Senha:</label>
+          <div class="col-sm-3">
+            <input class="form-control" type="password" name="senha">
+          </div>
+        </div>
+        <input class="btn btn-primary" type="submit" value="Cadastrar" />
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
