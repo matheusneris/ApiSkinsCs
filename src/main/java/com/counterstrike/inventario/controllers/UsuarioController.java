@@ -28,6 +28,15 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.salvarUsuario(usuarioRequest));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> editarUsuario(@PathVariable Long id, @RequestBody UsuarioRequest usuarioRequest){
+        Optional<UsuarioDto> usuarioDto = usuarioService.buscarUsuarioPorId(id);
+        if(usuarioDto.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não existe usuário com este id.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.editarUsuario(id , usuarioRequest));
+    }
+
     @GetMapping("/listartodos")
     public ResponseEntity<Object> listarTodosUsuarios(){
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.listarTodosUsuarios());

@@ -24,8 +24,4 @@ public class UsuarioModel {
     @Column(nullable = false)
     private String senha;
 
-    //public void adicionarSkinAoInventario(SkinModel skinModel){
-//        this.inventarioSkins.add(skinModel);
-//    }
-
 }

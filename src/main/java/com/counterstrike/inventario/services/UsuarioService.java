@@ -1,7 +1,6 @@
 package com.counterstrike.inventario.services;
 
 import com.counterstrike.inventario.dtos.UsuarioDto;
-import com.counterstrike.inventario.entities.SkinModel;
 import com.counterstrike.inventario.entities.UsuarioModel;
 import com.counterstrike.inventario.repositories.UsuarioRepository;
 import com.counterstrike.inventario.requests.UsuarioRequest;
@@ -27,8 +26,18 @@ public class UsuarioService extends Throwable {
         UsuarioModel usuarioModel = new UsuarioModel();
         BeanUtils.copyProperties(usuarioRequest, usuarioModel);
         usuarioRepository.save(usuarioModel);
-        UsuarioDto usuarioDto = new UsuarioDto(usuarioModel);
-        return usuarioDto;
+        return new UsuarioDto(usuarioModel);
+    }
+
+    public UsuarioDto editarUsuario(Long id, UsuarioRequest usuarioRequest){
+        UsuarioModel usuarioModel = usuarioRepository.findById(id).get();
+        usuarioModel.setNomeUsuario(usuarioRequest.getNomeUsuario());
+        usuarioModel.setEmail(usuarioRequest.getEmail());
+        usuarioModel.setSenha(usuarioRequest.getSenha());
+
+        usuarioRepository.save(usuarioModel);
+
+        return new UsuarioDto(usuarioModel);
     }
 
     public Optional<List<UsuarioDto>> listarTodosUsuarios(){
@@ -55,19 +64,6 @@ public class UsuarioService extends Throwable {
         }
         return usuarioModel.get();
     }
-
- /*   public UsuarioDto salvarSkinNoInventario(Long id, String idSkin){
-
-        UsuarioModel usuarioModel = usuarioRepository.findById(id).get();
-        Optional<SkinModel> skinModel = skinService.buscarSkinPorId(idSkin);
-        System.out.println(skinModel);
-        if(skinModel.isEmpty()){
-            throw new RuntimeException("skin não encontrada");
-        }
-        usuarioModel.adicionarSkinAoInventario(skinModel.get());
-        UsuarioModel usuarioModel1 = usuarioRepository.save(usuarioModel);
-        return new UsuarioDto(usuarioModel1);
-    }*/
 
     public void excluirUsuarioPorId(Long id){
         usuarioRepository.deleteById(id);

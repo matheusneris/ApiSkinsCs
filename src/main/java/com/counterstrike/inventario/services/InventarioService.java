@@ -22,7 +22,20 @@ public class InventarioService{
     }
 
     public Optional<InventarioDto> findByUsuarioModelIdAndSkinModelId(Long idUsuario, String idSkin){
-        return inventarioRepository.findByUsuarioModelIdAndSkinModelId(idUsuario, idSkin);
+         Optional<InventarioModel> inventarioModel = inventarioRepository.findByUsuarioModelIdAndSkinModelId(idUsuario, idSkin);
+         if(inventarioModel.isEmpty()){
+             Optional<InventarioDto> inventarioDtoOptional = Optional.empty();
+             return inventarioDtoOptional;
+         }
+         InventarioDto inventarioDto = new InventarioDto(inventarioModel.get());
+         return Optional.of(inventarioDto);
+    }
+
+    public void deletarSkinDeUsuario(Long idUsuario, String idSkin){
+        Optional<InventarioModel> inventarioModel = inventarioRepository.findByUsuarioModelIdAndSkinModelId(idUsuario, idSkin);
+        if(inventarioModel.isPresent()){
+            inventarioRepository.delete(inventarioModel.get());
+        }
     }
 
     public List<InventarioModel> buscarInventarioUsuario(Long id){

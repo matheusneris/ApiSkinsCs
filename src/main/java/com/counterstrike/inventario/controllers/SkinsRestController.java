@@ -43,6 +43,4 @@ public class SkinsRestController {
         return listaSkins;
     }
 
-
-
 }
