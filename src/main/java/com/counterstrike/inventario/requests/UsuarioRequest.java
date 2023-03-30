@@ -1,5 +1,6 @@
 package com.counterstrike.inventario.requests;
 
+import com.counterstrike.inventario.repositories.Role;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -23,4 +24,5 @@ public class UsuarioRequest {
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$")
     private String senha;
 
+    private Role role;
 }

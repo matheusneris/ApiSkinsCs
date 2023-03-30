@@ -4,6 +4,9 @@ import com.counterstrike.inventario.dtos.SkinDto;
 import com.counterstrike.inventario.services.SkinRestService;
 import com.counterstrike.inventario.searchresults.SkinsSearch;
 import com.counterstrike.inventario.services.SkinService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +15,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/skins")
+@PreAuthorize("harRole('USER')")
+@Log4j2
 public class SkinsRestController {
 
     private final SkinRestService skinRestService;
