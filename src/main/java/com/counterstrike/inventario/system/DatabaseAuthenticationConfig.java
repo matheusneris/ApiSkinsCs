@@ -25,7 +25,7 @@ public class DatabaseAuthenticationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return nomeUsuario -> (UserDetails) usuarioRepository.findByUsername(nomeUsuario).orElseThrow(() -> new UsernameNotFoundException("Não encontrado"));
+        return nomeUsuario -> (UserDetails) usuarioRepository.findByNomeUsuario(nomeUsuario).orElseThrow(() -> new UsernameNotFoundException("Não encontrado"));
     }
 
     @Bean

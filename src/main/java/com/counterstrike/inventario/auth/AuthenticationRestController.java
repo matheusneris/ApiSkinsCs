@@ -31,7 +31,7 @@ public class AuthenticationRestController {
     public AuthenticationResponse login(@RequestBody AuthenticationRequest request){
         var authentication = new UsernamePasswordAuthenticationToken(request.username(), request.password());
         authenticationManager.authenticate(authentication);
-        UsuarioModel user = userJpaRepository.findByUsername(request.username()).orElseThrow();
+        UsuarioModel user = userJpaRepository.findByNomeUsuario(request.username()).orElseThrow();
         String token = jwtService.createToken((UserDetails) user);
         return  new AuthenticationResponse(user.getId(), token);
     }

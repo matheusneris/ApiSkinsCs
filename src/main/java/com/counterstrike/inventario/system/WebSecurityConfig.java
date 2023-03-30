@@ -50,7 +50,8 @@ public class WebSecurityConfig {
                         requests
                                 .requestMatchers(PathRequest.toH2Console()).permitAll()
                                 .requestMatchers(AUTH_ALLOWLIST).permitAll()
-                                .requestMatchers(HttpMethod.POST, "/usuario").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/usuario/criar").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/skins/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .headers().frameOptions().disable()
