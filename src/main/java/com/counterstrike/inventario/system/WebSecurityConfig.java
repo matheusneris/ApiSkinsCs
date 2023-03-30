@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -38,7 +41,9 @@ public class WebSecurityConfig {
             "/actuator/**",
             "/health/**",
             // Login
-            "/auth/**"
+            "/auth/**",
+            "/auth/login",
+            "/usuario/**"
     };
 
 
@@ -51,7 +56,6 @@ public class WebSecurityConfig {
                                 .requestMatchers(PathRequest.toH2Console()).permitAll()
                                 .requestMatchers(AUTH_ALLOWLIST).permitAll()
                                 .requestMatchers(HttpMethod.POST, "/usuario/criar").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/skins/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .headers().frameOptions().disable()
@@ -62,7 +66,7 @@ public class WebSecurityConfig {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
+
         return http.build();
     }
-
 }

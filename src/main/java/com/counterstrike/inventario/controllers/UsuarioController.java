@@ -3,8 +3,10 @@ package com.counterstrike.inventario.controllers;
 import com.counterstrike.inventario.dtos.UsuarioDto;
 import com.counterstrike.inventario.requests.UsuarioRequest;
 import com.counterstrike.inventario.services.UsuarioService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,9 +14,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuario")
+//@PreAuthorize("hasRole('ADMIN')")
+@Log4j2
 public class UsuarioController {
 
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
 
     public UsuarioController(UsuarioService usuarioService){
         this.usuarioService = usuarioService;

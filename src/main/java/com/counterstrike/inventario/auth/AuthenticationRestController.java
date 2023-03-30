@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Log
 public class AuthenticationRestController {
 
-    private final UsuarioRepository userJpaRepository;
+    private final UsuarioRepository usuarioRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
@@ -31,8 +31,8 @@ public class AuthenticationRestController {
     public AuthenticationResponse login(@RequestBody AuthenticationRequest request){
         var authentication = new UsernamePasswordAuthenticationToken(request.username(), request.password());
         authenticationManager.authenticate(authentication);
-        UsuarioModel user = userJpaRepository.findByNomeUsuario(request.username()).orElseThrow();
-        String token = jwtService.createToken((UserDetails) user);
+        UsuarioModel user = usuarioRepository.findByNomeUsuario(request.username()).orElseThrow();
+        String token = jwtService.createToken(user);
         return  new AuthenticationResponse(user.getId(), token);
     }
 
