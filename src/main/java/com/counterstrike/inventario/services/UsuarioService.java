@@ -57,6 +57,20 @@ public class UsuarioService extends Throwable {
         return null;
     }
 
+    public boolean login(String email, String senha) {
+        boolean loginSuccess = false;
+        List<UsuarioModel> usuariosModels = usuarioRepository.findAll();
+        for (UsuarioModel usuario: usuariosModels) {
+            System.out.println(usuario.getSenha());
+            System.out.println("==");
+            System.out.println(senha);
+            if (usuario.getEmail().equals(email) && usuario.getSenha().equals(senha)) {
+                loginSuccess = true;
+            }
+        }
+        return loginSuccess;
+    }
+
     public UsuarioModel getUsuarioModel(Long id){
         Optional<UsuarioModel> usuarioModel = usuarioRepository.findById(id);
         if (usuarioModel.isEmpty()){
