@@ -11,12 +11,12 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/usuario")
-public class UsuarioController {
+@RequestMapping("/rest/usuario")
+public class UsuarioRestController {
 
     private UsuarioService usuarioService;
 
-    public UsuarioController(UsuarioService usuarioService){
+    public UsuarioRestController(UsuarioService usuarioService){
         this.usuarioService = usuarioService;
     }
 
@@ -49,6 +49,15 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.OK).body(usuarioDto);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não existe usuário com este id.");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Object> buscarUsuarioPorId(@RequestBody UsuarioRequest usuarioReques){
+        boolean containsUser =  usuarioService.login(usuarioReques.getEmail(), usuarioReques.getSenha());
+        if(containsUser){
+            return ResponseEntity.status(HttpStatus.OK).body("Login realizado com sucesso");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email ou senha incorretos");
     }
 
     @DeleteMapping("/excluir/{id}")
