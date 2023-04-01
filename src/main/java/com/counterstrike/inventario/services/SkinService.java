@@ -29,7 +29,8 @@ public class SkinService {
         if (skinModel.isPresent()){
             return skinModel;
         }
-        return null;
+        skinModel = Optional.empty();
+        return skinModel;
     }
 
 }

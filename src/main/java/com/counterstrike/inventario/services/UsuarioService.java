@@ -54,7 +54,8 @@ public class UsuarioService extends Throwable {
         if(usuarioModel.isPresent()){
             return Optional.of(new UsuarioDto(usuarioModel.get()));
         }
-        return null;
+        Optional<UsuarioDto> usuarioDto = Optional.empty();
+        return usuarioDto;
     }
 
     public UsuarioModel getUsuarioModel(Long id){

@@ -27,7 +27,6 @@ public class SkinsRestController {
 
         List<SkinsSearch> listaSkins = skinRestService.buscar();
         SkinDto skinDto = new SkinDto();
-        int contador = 0;
         for (SkinsSearch skin : listaSkins) {
 
             skinDto.setId(skin.getId());
@@ -37,8 +36,6 @@ public class SkinsRestController {
             skinDto.setImage(skin.getImage());
 
             skinService.salvarSkin(skinDto);
-            contador++;
-            if(contador==10) break;
         }
         return listaSkins;
     }

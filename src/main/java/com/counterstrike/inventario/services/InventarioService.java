@@ -31,11 +31,13 @@ public class InventarioService{
          return Optional.of(inventarioDto);
     }
 
-    public void deletarSkinDeUsuario(Long idUsuario, String idSkin){
+    public String deletarSkinDeUsuario(Long idUsuario, String idSkin){
         Optional<InventarioModel> inventarioModel = inventarioRepository.findByUsuarioModelIdAndSkinModelId(idUsuario, idSkin);
         if(inventarioModel.isPresent()){
             inventarioRepository.delete(inventarioModel.get());
+            return "Skin deletada.";
         }
+        return "O inventário não possui essa skin.";
     }
 
     public List<InventarioModel> buscarInventarioUsuario(Long id){
