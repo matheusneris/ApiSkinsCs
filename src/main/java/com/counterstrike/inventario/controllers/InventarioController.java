@@ -70,7 +70,8 @@ public class InventarioController {
         if(usuarioDto.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não existe usuário com este id");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(inventarioService.deletarSkinDeUsuario(id, inventarioRequest.getIdSkin()));
+        inventarioService.deletarSkinDeUsuario(id, inventarioRequest.getIdSkin());
+        return ResponseEntity.status(HttpStatus.OK).body("Skin deletada.");
     }
 
 }

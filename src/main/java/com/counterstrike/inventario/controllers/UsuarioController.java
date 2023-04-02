@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-    @GetMapping("login")
+    @PostMapping("login")
     public String login(){
         return "login";
     }
 
-    @GetMapping("novo")
+    @PostMapping("novo")
     public String createUser(){
         return "createUser";
     }
