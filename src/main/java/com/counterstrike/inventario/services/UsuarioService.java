@@ -54,8 +54,7 @@ public class UsuarioService extends Throwable {
         if(usuarioModel.isPresent()){
             return Optional.of(new UsuarioDto(usuarioModel.get()));
         }
-        Optional<UsuarioDto> usuarioDto = Optional.empty();
-        return usuarioDto;
+        return null;
     }
 
     public boolean login(String email, String senha) {
